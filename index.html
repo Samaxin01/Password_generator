@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Password Generator</h1>
+        <form>
+            <label for="length">Password Length:</label>
+            <input type="number" id="length" value="12" min="8" max="128">
+
+            <label for="uppercase">Include Uppercase Letters:</label>
+            <input type="checkbox" id="uppercase" checked>
+
+            <label for="numbers">Include Numbers:</label>
+            <input type="checkbox" id="numbers" checked>
+
+            <label for="special">Include Special Characters:</label>
+            <input type="checkbox" id="special" checked>
+
+            <button id="generate">Generate Password</button>
+        </form>
+
+        <div id="password"></div>
+    </div>
+
+    <script>
+        const lengthInput = document.getElementById('length');
+const uppercaseInput = document.getElementById('uppercase');
+const numbersInput = document.getElementById('numbers');
+const specialInput = document.getElementById('special');
+const generateButton = document.getElementById('generate');
+const passwordDiv = document.getElementById('password');
+
+generateButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const length = parseInt(lengthInput.value);
+    const includeUppercase = uppercaseInput.checked;
+    const includeNumbers = numbersInput.checked;
+    const includeSpecial = specialInput.checked;
+
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let password = '';
+
+    if (includeUppercase) {
+        password += getRandomCharacter('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    }
+
+    if (includeNumbers) {
+        password += getRandomCharacter('0123456789');
+    }
+
+    if (includeSpecial) {
+        password += getRandomCharacter('!@#$%^&*()_+~`|}{[]:;?><,./');
+    }
+
+    for (let i = password.length; i < length; i++) {
+        password += getRandomCharacter(characters);
+    }
+
+    passwordDiv.innerText = password;
+});
+
+function getRandomCharacter(characters) {
+    return characters.charAt(Math.floor(Math.random() * characters.length));
+}
+    </script>
+</body>
+</html>
